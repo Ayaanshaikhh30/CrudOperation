@@ -12,15 +12,49 @@ const Register = () => {
   });
 
   const setdata = (e) => {
-    console.log(e.target.value);
     const { name, value } = e.target;
-    setInp((preval) => {
-      return {
-        preval,
-        [name]: value,
-      };
-    });
+    setInp((preval) => ({
+      ...preval,   // ✅ Spread previous state correctly
+      [name]: value, 
+    }));
   };
+  
+
+  const addinpdata = async (e) => {
+    e.preventDefault();
+    
+    // Validate inputs before sending request
+    const { name, email, work, add, mobile, desc, age } = intval;
+    if (!name || !email || !work || !add || !mobile || !desc || !age) {
+        alert("Please fill all fields");
+        return;
+    }
+
+    try {
+        const res = await fetch("http://localhost:8000/api/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ name, email, work, add, mobile, desc, age })
+        });
+
+        const data = await res.json();
+        console.log(data);
+
+        if (res.status !== 201) {
+            alert(`Error: ${data.error || "Something went wrong"}`);
+            console.log("Error:", data.error);
+        } else {
+            alert("Data added successfully!");
+            console.log("Data added:", data);
+        }
+    } catch (error) {
+        console.error("Fetch error:", error);
+        alert("Server error, please try again later.");
+    }
+};
+
 
   return (
     <div
@@ -48,7 +82,7 @@ const Register = () => {
             fontSize: "32px",
             marginBottom: "20px",
             textAlign: "center",
-            marginTop:"9px"
+            marginTop: "9px",
           }}
         >
           Register
@@ -126,7 +160,7 @@ const Register = () => {
                 type="text"
                 value={intval.add}
                 onChange={setdata}
-                name="address"
+                name="add"
                 className="form-control"
                 style={{ padding: "10px", width: "100%" }}
               />
@@ -140,7 +174,7 @@ const Register = () => {
               className="form-control"
               value={intval.desc}
               onChange={setdata}
-              name="description"
+              name="desc"
               rows="3"
               style={{ padding: "10px", width: "100%" }}
             ></textarea>
@@ -149,10 +183,11 @@ const Register = () => {
           {/* Submit Button */}
           <button
             type="submit"
+            onClick={addinpdata}
             className="btn btn-primary"
             style={{ fontSize: "20px", padding: "10px" }}
           >
-            Register
+            Submit
           </button>
         </form>
       </div>
@@ -160,4 +195,4 @@ const Register = () => {
   );
 };
 
-export default Register;   
+export default Register;

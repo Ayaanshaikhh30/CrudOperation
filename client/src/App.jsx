@@ -9,7 +9,7 @@ import Detail from "./Component/Detail";
 function App() {
   return (
     <Router>
-      <Navbar />
+      <Navbar/>
       <Routes>
         {/* Home page pe Navbar ke saath dikhega */}
         <Route exact

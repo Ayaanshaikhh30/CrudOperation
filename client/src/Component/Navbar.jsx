@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const styles = {
@@ -13,10 +13,10 @@ const styles = {
     top: "0",
     left: "0",
     width: "100%",
-    height: "60px", // ✅ Fixed height
+    height: "60px", // 
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
     zIndex: "1000",
-    overflow: "hidden", // ✅ Prevents scrollbar issue
+    overflow: "hidden", 
   },
 
   logo: {
@@ -25,26 +25,44 @@ const styles = {
     cursor: "pointer",
   },
 
-  navLinks: {
-    listStyle: "none",
+  searchContainer: {
     display: "flex",
-    gap: "20px",
-    margin: 0,
-    padding: 0,
+    gap: "10px",
+    alignItems: "center",
   },
 
-  link: {
-    textDecoration: "none",
-    color: "black",
-    fontWeight: "bold",
+  searchInput: {
+    padding: "8px",
+    fontSize: "14px",
+    border: "1px solid #ccc",
+    borderRadius: "10px",
+    outline: "none",
+    width: "200px",
+  },
+
+  searchButton: {
+    padding: "8px 12px",
+    fontSize: "14px",
+    backgroundColor: "black",
+    color: "white",
+    border: "none",
+    borderRadius: "10px",
     cursor: "pointer",
-    transition: "color 0.2s ease",
+    transition: "background-color 0.3s ease",
   },
 };
 
 const Navbar = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearch = () => {
+    alert(`Searching for: ${searchTerm}`);
+    setSearchTerm(""); // ✅ Clear input after search
+  };
+
   return (
     <div style={styles.navbar}>
+      {/* Logo */}
       <h2
         style={styles.logo}
         onMouseEnter={(e) => (e.target.style.color = "red")}
@@ -53,38 +71,19 @@ const Navbar = () => {
         Navbar
       </h2>
 
-      <ul style={styles.navLinks}>
-        <li>
-          <Link
-            to="/"
-            style={styles.link}
-            onMouseEnter={(e) => (e.target.style.color = "red")}
-            onMouseLeave={(e) => (e.target.style.color = "black")}
-          >
-            Home
-          </Link>
-        </li>
-        <li>
-          <Link
-            to="/about"
-            style={styles.link}
-            onMouseEnter={(e) => (e.target.style.color = "red")}
-            onMouseLeave={(e) => (e.target.style.color = "black")}
-          >
-            About
-          </Link>
-        </li>
-        <li>
-          <Link
-            to="/contact"
-            style={styles.link}
-            onMouseEnter={(e) => (e.target.style.color = "red")}
-            onMouseLeave={(e) => (e.target.style.color = "black")}
-          >
-            Contact
-          </Link>
-        </li>
-      </ul>
+      {/* Search Bar & Button */}
+      <div style={styles.searchContainer}>
+        <input
+          type="text"
+          placeholder="Search..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          style={styles.searchInput}
+        />
+        <button style={styles.searchButton} onClick={handleSearch}>
+          Search
+        </button>
+      </div>
     </div>
   );
 };
