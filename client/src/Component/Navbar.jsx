@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const styles = {
   navbar: {
@@ -12,15 +13,16 @@ const styles = {
     top: "0",
     left: "0",
     width: "100%",
+    height: "60px", // ✅ Fixed height
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
     zIndex: "1000",
+    overflow: "hidden", // ✅ Prevents scrollbar issue
   },
+
   logo: {
-    margin: 0,
     fontSize: "24px",
     fontWeight: "bold",
     cursor: "pointer",
-    transition: "color 0.3s ease",
   },
 
   navLinks: {
@@ -30,6 +32,7 @@ const styles = {
     margin: 0,
     padding: 0,
   },
+
   link: {
     textDecoration: "none",
     color: "black",
@@ -47,23 +50,40 @@ const Navbar = () => {
         onMouseEnter={(e) => (e.target.style.color = "red")}
         onMouseLeave={(e) => (e.target.style.color = "black")}
       >
-        {" "}
         Navbar
       </h2>
 
       <ul style={styles.navLinks}>
-        {["Home", "About", "Contact"].map((item, index) => (
-          <li key={index}>
-            <a
-              href="#"
-              style={styles.link}
-              onMouseEnter={(e) => (e.target.style.color = "red")}
-              onMouseLeave={(e) => (e.target.style.color = "black")}
-            >
-              {item}
-            </a>
-          </li>
-        ))}
+        <li>
+          <Link
+            to="/"
+            style={styles.link}
+            onMouseEnter={(e) => (e.target.style.color = "red")}
+            onMouseLeave={(e) => (e.target.style.color = "black")}
+          >
+            Home
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/about"
+            style={styles.link}
+            onMouseEnter={(e) => (e.target.style.color = "red")}
+            onMouseLeave={(e) => (e.target.style.color = "black")}
+          >
+            About
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/contact"
+            style={styles.link}
+            onMouseEnter={(e) => (e.target.style.color = "red")}
+            onMouseLeave={(e) => (e.target.style.color = "black")}
+          >
+            Contact
+          </Link>
+        </li>
       </ul>
     </div>
   );
